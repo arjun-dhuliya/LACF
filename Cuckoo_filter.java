@@ -67,6 +67,21 @@ public class Cuckoo_filter {
         return false; // Filter is full
     }
 
+    public boolean lookup(int IP){
+        int f = fingerprint(IP);
+        int i1 = hash(IP);
+        if(filter[i1] == f){
+            System.out.println("Found " + IP + " : " + f + " at " + i1);
+            return true;
+        }
+        int i2 = i1 ^ hash(f);
+        if(filter[i2] == f){
+            System.out.println("Found " + IP + " : " + f + " at " + i2);
+            return true;
+        }
+        return false;
+    }
+
 //    public int hashCode(String s) {
 //        if (h == 0 && value.length > 0) {
 //            char val[] = value;
@@ -118,6 +133,9 @@ public class Cuckoo_filter {
             cuckoo.insert(i);
             System.out.println("\n" + fingerprint_table.toString());
             cuckoo.ToString();
+        }
+        for(int i:IPs){
+            cuckoo.lookup(i);
         }
     }
 }
